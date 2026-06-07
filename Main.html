@@ -1,7 +1,195 @@
-<!html>
-<html>
-  <head>
-	  <title>Javascript Main Page</title>
-    <p>This is my page</p>
-   <?head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Mobile App</title>
+  <script defer src="app.js"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090b16;
+      --surface: rgba(255,255,255,0.06);
+      --surface-strong: rgba(255,255,255,0.12);
+      --text: #eef2ff;
+      --muted: #9aa4bf;
+      --accent: #6c5ce7;
+      --accent-strong: #4f42d1;
+      --shadow: 0 24px 48px rgba(0,0,0,0.25);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top, rgba(108,92,231,0.35), transparent 25%),
+                  linear-gradient(180deg, #0f172a 0%, #090b16 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      width: min(100%, 960px);
+      padding: 32px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 2.8vw, 3.6rem);
+      letter-spacing: -0.04em;
+      max-width: 16ch;
+    }
+
+    p.lead {
+      color: var(--muted);
+      max-width: 42ch;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .button,
+    .secondary {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+      text-decoration: none;
+    }
+
+    .button {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: white;
+      box-shadow: 0 18px 30px rgba(108,92,231,0.28);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
+    .button:hover,
+    .secondary:hover {
+      transform: translateY(-1px);
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.16); }
+
+    .card h2 {
+      margin: 0 0 16px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .status {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+    }
+
+    .status strong {
+      color: white;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px; }
+      header { flex-direction: column; align-items: stretch; }
+      .hero-actions { justify-content: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <div>
+        <h1>Welcome to the interactive mobile app</h1>
+        <p class="lead">A modern UI scaffold with responsive layout, action cards, and live page behavior to make your HTML app feel like a polished mobile experience.</p>
+        <div class="hero-actions">
+          <a class="button" href="panel.html">Open Panel Page</a>
+          <button class="secondary" id="welcomeButton">Show Welcome Tip</button>
+        </div>
+      </div>
+      <div class="card" style="min-width: 240px;">
+        <h2>Quick start</h2>
+        <p>Tap the button to reveal a quick tip and explore the linked panel page for more interactions.</p>
+      </div>
+    </header>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Fast feedback</h2>
+        <p>The app responds immediately to button clicks and dynamically updates the interface with smooth transitions.</p>
+      </article>
+      <article class="card">
+        <h2>Responsive layout</h2>
+        <p>Built to look great on desktop and mobile screens, with fluid spacing and readable typography.</p>
+      </article>
+      <article class="card">
+        <h2>Modern style</h2>
+        <p>Glassmorphism-inspired surfaces, vivid accent colors, and subtle shadows keep the design clean and polished.</p>
+      </article>
+    </section>
+
+    <div class="status">
+      <div>
+        <strong>Current mode:</strong> <span id="statusText">Ready</span>
+      </div>
+      <div>
+        <strong>Message:</strong> <span id="statusMessage">Tap the button to see an interactive tip.</span>
+      </div>
+    </div>
+  </main>
+</body>
 </html>
